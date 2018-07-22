@@ -10,11 +10,12 @@ Enjoy the finest free stream of classical music the internet has to offer.
 
 * Play WFMT
 * Play classical music
+* What's on WFMT?
+* What was on WFMT?
 
 ## Future work
 
-* Look up the current song
-* Look up past/future songs
+* Improve the rendering of the currently playing track, etc.
 
 ## Author
 
