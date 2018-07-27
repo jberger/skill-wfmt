@@ -75,7 +75,7 @@ class WFMTSkill(MycroftSkill):
         if 'title' not in show:
             return None
         text = show['title']
-        if show.get('title'):
+        if show.get('subtitle'):
             text += '. ' + show['subtitle']
         return text
 
