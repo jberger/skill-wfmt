@@ -37,12 +37,12 @@ class WFMTSkill(MycroftSkill):
                 text += self.parse_track(playlist['track'])
                 if show:
                     text += '. On ' + show
-                self.speak(text)
+                self.__inform(text)
                 return
 
             if show:
                 text = 'WFMT is currently airing ' + show
-                self.speak(text)
+                self.__inform(text)
                 return
 
             raise RuntimeError('No information')
@@ -58,13 +58,21 @@ class WFMTSkill(MycroftSkill):
             if playlist['prev_track'][0]:
                 text = 'WFMT was previously playing '
                 text += self.parse_track(playlist['prev_track'][0])
-                self.speak(text)
+                self.__inform(text)
             else:
                 raise RuntimeError('No track')
 
         except Exception as e:
             self.log.info('failed to look up previous playing information: ' + str(e))
             self.speak('Sorry, I cannot find that right now')
+
+    def __inform(self, text):
+        self.enclosure.deactivate_mouth_events()
+        self.enclosure.mouth_text(text)
+        self.speak(text)
+        mycroft.audio.wait_while_speaking()
+        self.enclosure.activate_mouth_events()
+        self.enclosure.mouth_reset()
 
     def fetch_playlist(self):
         r = requests.get('https://clients.webplaylist.org/cgi-bin/wfmt/wonV2.json?_=1532182149220')
