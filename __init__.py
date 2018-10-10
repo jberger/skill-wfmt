@@ -22,9 +22,12 @@ class WFMTSkill(MycroftSkill):
         self.audio_service.play('http://stream.wfmt.com/main-mp3')
 
     def stop(self):
-        self.log.info('stopping WFMT stream')
-        self.audio_service.stop()
-        return True
+        if self.audio_service.is_playing:
+            self.log.info('stopping WFMT stream')
+            self.audio_service.stop()
+            return True
+        else:
+            return False
 
     @intent_handler(IntentBuilder("CurrentIntent").require("Current"))
     def handle_current_intent(self, message):
